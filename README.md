@@ -57,3 +57,44 @@ git config user.email "{user@example.com}"
 ```
 
 Running git config without the --global option will set the user details for an individual repository, rather than user-wide.
+
+
+## SSH
+
+Note that there are at least two bug reports for ssh-add -d/-D not removing keys:
+
+- ["Debian Bug report #472477: ssh-add -D does not remove SSH key from gnome-keyring-daemon memory"]
+- ["Ubuntu: ssh-add -D deleting all identities does not work. Also, why are all identities auto-added?"]
+
+The exact issue is:
+
+> ssh-add -d/-D deletes only manually added keys from gnome-keyring.
+> There is no way to delete automatically added keys.
+> This is the original bug, and it's still definitely present.
+
+> So, for example, if you have two different automatically-loaded ssh identities associated with two different GitHub accounts -- say for work and for home -- there's no way to switch between them. GitHubtakes the first one which matches, so you always appear as your 'home' user to GitHub, with no way to upload things to work projects.
+
+> Allowing ssh-add -d to apply to automatically-loaded keys (and ssh-add -t X to change the lifetime of automatically-loaded keys), would restore the behavior most users expect.
+
+More precisely, about the issue:
+
+> The culprit is gpg-keyring-daemon:
+
+> > It subverts the normal operation of ssh-agent, mostly just so that it can pop up a pretty box into which you can type the passphrase for an encrypted ssh key.
+> > And it paws through your .ssh directory, and automatically adds any keys it finds to your agent.
+> > And it won't let you delete those keys.
+
+> How do we hate this? Let's not count the ways -- life's too short.
+
+> > The failure is compounded because newer ssh clients automatically try all the keys in your ssh-agent when connecting to a host.
+> > If there are too many, the server will reject the connection.
+> > And since gnome-keyring-daemon has decided for itself how many keys you want your ssh-agent to have, and has autoloaded them, AND WON'T LET YOU DELETE THEM, you're toast.
+
+This bug is still confirmed in Ubuntu 14.04.4, as recently as two days ago (August 21st, 2014)
+
+A possible workaround:
+
+> Do ssh-add -D to delete all your manually added keys. This also locks the automatically added keys, but is not much use since gnome-keyring will ask you to unlock them anyways when you try doing a git push.
+> Navigate to your ~/.ssh folder and move all your key files except the one you want to identify with into a separate folder called backup. If necessary you can also open seahorse and delete the keys from there.
+> Now you should be able to do git push without a problem.
+
