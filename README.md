@@ -63,8 +63,8 @@ Running git config without the --global option will set the user details for an 
 
 Note that there are at least two bug reports for ssh-add -d/-D not removing keys:
 
-- ["Debian Bug report #472477: ssh-add -D does not remove SSH key from gnome-keyring-daemon memory"]
-- ["Ubuntu: ssh-add -D deleting all identities does not work. Also, why are all identities auto-added?"]
+- ["Debian Bug report #472477: ssh-add -D does not remove SSH key from gnome-keyring-daemon memory"]{https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=472477}
+- ["Ubuntu: ssh-add -D deleting all identities does not work. Also, why are all identities auto-added?"](https://bugs.launchpad.net/ubuntu/+source/openssh/+bug/505278)
 
 The exact issue is:
 
