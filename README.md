@@ -158,10 +158,19 @@ cp ../../.env worktrees/feat-payments/.env
 ### Remove 
 
 ```
+# 1. Удалить worktree (директорию + регистрацию в git)
+git worktree remove ./worktrees/feature-ssp-551-2
+
+# 2. Удалить ветку (если она больше не нужна)
+git branch -d feature/ssp-551-2
+
+# Если в worktree есть несохранённые изменения — git откажет. Форс:
+git worktree remove --force ./worktrees/feature-ssp-551-2
+
+# Проверить все активные worktree:
 git worktree list
-git worktree remove --force /home/apg/misc/apps/z-global/backend/worktrees/feature-ssp-551-2
-git branch -D feature/ssp-551-2
-git worktree prune
 ```
+
+
 
 
