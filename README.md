@@ -106,5 +106,22 @@ A possible workaround:
 
 ## Worktree
 
+### Variant with Docker - Worktree внутри проекта (проще всего)
 
+На хосте:
+```
+git worktree add ./worktrees/feat-payments feat-payments
+git worktree add ./worktrees/fix-auth fix-auth
+```
+
+Структура:
+```
+/var/www/                        ← main branch
+/var/www/worktrees/
+    feat-payments/               ← отдельная ветка, свои файлы
+    fix-auth/                    ← отдельная ветка, свои файлы
+```
+
+Всё это уже внутри /var/www → уже смонтировано → видно в обоих контейнерах.
+В .gitignore добавить: ```/worktrees/```
 
