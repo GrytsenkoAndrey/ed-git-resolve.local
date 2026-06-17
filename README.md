@@ -155,5 +155,13 @@ cp ../../.env worktrees/feat-payments/.env
 
 Для **большинства задач — симлинк**, одна база. Для параллельных миграций — отдельная база обязательно.
 
+### Remove 
+
+```
+git worktree list
+git worktree remove --force /home/apg/misc/apps/z-global/backend/worktrees/feature-ssp-551-2
+git branch -D feature/ssp-551-2
+git worktree prune
+```
 
 
