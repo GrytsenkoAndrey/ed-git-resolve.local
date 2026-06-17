@@ -3,6 +3,7 @@
 **TOC**
 - [Bitbucket](#bitbucket)
 - [SSH](#ssh)
+- [Worktree](#worktree)
 
 
 ## Bitbucket
@@ -102,4 +103,8 @@ A possible workaround:
 > Do ssh-add -D to delete all your manually added keys. This also locks the automatically added keys, but is not much use since gnome-keyring will ask you to unlock them anyways when you try doing a git push.
 > Navigate to your ~/.ssh folder and move all your key files except the one you want to identify with into a separate folder called backup. If necessary you can also open seahorse and delete the keys from there.
 > Now you should be able to do git push without a problem.
+
+## Worktree
+
+
 
