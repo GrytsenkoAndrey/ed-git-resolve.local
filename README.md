@@ -122,6 +122,21 @@ git worktree add ./worktrees/fix-auth fix-auth
     fix-auth/                    ← отдельная ветка, свои файлы
 ```
 
-Всё это уже внутри /var/www → уже смонтировано → видно в обоих контейнерах.
+Всё это уже внутри /var/www → уже смонтировано → видно в обоих контейнерах. 
+
 В .gitignore добавить: ```/worktrees/```
 
+### Запуск нескольких сессий:
+
+```
+# Терминал 1 — основная ветка
+docker exec -it sswb-claude bash -c "cd /var/www && claude"
+
+# Терминал 2 — feat-payments
+docker exec -it sswb-claude bash -c "cd /var/www/worktrees/feat-payments && claude"
+
+# Терминал 3 — fix-auth
+docker exec -it sswb-claude bash -c "cd /var/www/worktrees/fix-auth && claude"
+```
+
+Каждый claude процесс видит только свою директорию → нет конфликтов по файлам.
